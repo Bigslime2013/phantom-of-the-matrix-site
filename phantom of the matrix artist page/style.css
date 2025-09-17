@@ -1,0 +1,248 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { font-family: 'Orbitron', sans-serif; overflow-x: hidden; }
+
+/* Themes */
+body.theme-matrix { background: #000; color: #00ffcc; }
+body.theme-glitch { background: #0d0000; color: #ff0033; }
+body.theme-ghost  { background: #111; color: #f5f5f5; }
+body.theme-neon   { background: #000012; color: #7df9ff; } /* secret theme */
+
+/* Creator tools */
+#creator-tools {
+  position: fixed; top: 10px; right: 10px;
+  background: rgba(0,0,0,0.85);
+  padding: 10px; border-radius: 8px;
+  font-size: 0.9em; color: currentColor; z-index: 99999;
+}
+#creator-tools label { display:block; margin:5px 0; }
+
+/* Debug */
+.debug-outline section, .debug-outline .hero, .debug-outline footer {
+  outline: 2px dashed magenta; position: relative;
+}
+.debug-outline section::before, .debug-outline .hero::before, .debug-outline footer::before {
+  content: attr(class);
+  position: absolute; top: -20px; left: 0;
+  font-size: 0.7em; background: magenta; color: #fff; padding: 2px 4px;
+}
+
+/* Boot screen */
+#boot-screen {
+  position: fixed; inset: 0; background: #000;
+  display:flex; flex-direction:column; justify-content:center; align-items:center; z-index: 10000;
+}
+.boot-text { font-size: 2em; color: currentColor; animation: glitchText 1s infinite; }
+.boot-progress { width: 60%; height: 10px; background: rgba(255,255,255,0.1); margin-top: 20px; }
+.boot-bar { height: 100%; width: 0%; background: currentColor; animation: loadBar 3s forwards; }
+@keyframes loadBar { to { width: 100%; } }
+@keyframes glitchText { 0%,100%{ text-shadow:0 0 5px currentColor;} 50%{ text-shadow:2px 0 red,-2px 0 blue;} }
+
+/* Multi-layer canvases */
+#matrix-back, #matrix-mid, #matrix-front, #particle-canvas {
+  position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -3;
+}
+#matrix-mid { z-index: -2; }
+#matrix-front { z-index: -1; }
+#particle-canvas { z-index: 0; pointer-events: none; }
+
+/* 3D glyph cloud */
+#glyph3d-container {
+  position: fixed; right: 20px; bottom: 20px; width: 260px; height: 180px; z-index: 10;
+  border: 1px solid currentColor; box-shadow: 0 0 10px currentColor; background: rgba(0,0,0,0.4);
+}
+#glyph3d { width: 100%; height: 100%; display: block; }
+
+/* Mouse trail */
+#trail-container { position: fixed; inset: 0; pointer-events: none; z-index: 9999; }
+.matrix-trail {
+  position: fixed; font-family: monospace; font-size: 16px; color: currentColor;
+  text-shadow: 0 0 5px currentColor; animation: fadeOut 0.5s ease-out forwards; z-index: 9999;
+}
+@keyframes fadeOut { 0%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(0.5)} }
+
+/* Hero */
+.hero { text-align: center; padding: 100px 20px; }
+.hero h1 { font-size: 4em; text-shadow: 0 0 20px currentColor; }
+.tagline { margin-bottom: 40px; }
+
+/* Glow buttons + merch */
+.glow-btn, .merch-item {
+  display:inline-block; margin:10px; padding:15px 25px; border:2px solid currentColor;
+  background: transparent; color: inherit; text-decoration:none; border-radius:5px;
+  box-shadow: 0 0 10px currentColor; transition: all 0.25s ease; cursor: pointer;
+}
+.glow-btn:hover, .merch-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px currentColor, 0 0 40px currentColor;
+}
+
+/* Sections */
+section {
+  padding: 60px 20px; max-width: 900px; margin: 0 auto 40px auto;
+  background: rgba(0,0,0,0.75); border-radius: 10px; text-align: center;
+}
+
+/* Contact + Email inputs */
+.contact form, .email form { display:flex; flex-direction:column; align-items:center; }
+.contact input, .contact textarea, .contact input[type="date"], .email input {
+  margin: 10px 0; padding: 15px; background: #000;
+  border: 2px solid currentColor; color: currentColor; font-size: 1em; width: 100%;
+}
+
+/* Merch grid */
+.merch-grid { display:flex; justify-content:space-around; flex-wrap:wrap; }
+
+/* Footer */
+.footer { font-size: 0.9em; opacity: 0.7; }
+
+/* Scanlines */
+#scanlines {
+  pointer-events:none; position:fixed; inset:0; z-index:10000;
+  background: repeating-linear-gradient(
+    to bottom, rgba(255,255,255,0.03), rgba(255,255,255,0.03) 1px, transparent 1px, transparent 3px
+  );
+}
+
+/* HUD */
+#system-hud {
+  position: fixed; top: 10px; left: 10px; width: 220px;
+  background: rgba(0,0,0,0.7); padding: 10px; border: 1px solid currentColor;
+  font-family: monospace; font-size: 0.85em; color: currentColor; box-shadow: 0 0 10px currentColor;
+  z-index: 11000;
+}
+#system-hud .hud-title { font-weight:bold; margin-bottom:5px; text-shadow: 0 0 5px currentColor; }
+#system-hud .hud-line { margin: 2px 0; }
+#system-hud .hud-glyphs { margin-top:5px; height: 40px; overflow:hidden; font-size:0.8em; line-height:1.2; opacity:0.8; }
+#system-hud .hud-alert { margin-top:5px; font-weight:bold; color:red; text-shadow:0 0 5px red; height: 16px; }
+
+/* Theme switch transition (glitch/fade/melt) */
+body.theme-transition::before {
+  content:""; position: fixed; inset: 0; z-index: 12000;
+  background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.07), rgba(0,0,0,0.9));
+  mix-blend-mode: screen; animation: melt 0.3s ease; pointer-events:none;
+  filter: url('#'); /* placeholder to hint distortion */
+}
+@keyframes melt {
+  0% { opacity: 1; transform: scale(1.02); filter: blur(2px) contrast(1.4); }
+  100% { opacity: 0; transform: scale(1); filter: blur(0) contrast(1); }
+}
+
+/* Section reveal base */
+.reveal { opacity: 0; transform: translateY(10px); }
+.reveal.revealed { opacity: 1; transform: translateY(0); transition: opacity 0.6s ease, transform 0.6s ease; }
+.decrypt { letter-spacing: 0.5px; white-space: nowrap; }
+
+/* Glitch class used elsewhere */
+.glitch { animation: quickGlitch 0.3s linear; }
+@keyframes quickGlitch {
+  0% { filter: hue-rotate(0deg) contrast(1); }
+  33%{ filter: hue-rotate(30deg) contrast(1.4); transform: translateX(1px); }
+  66%{ filter: hue-rotate(-20deg) contrast(1.2); transform: translateX(-1px); }
+  100% { filter: hue-rotate(0deg) contrast(1); transform: none; }
+}/* ===========================
+   PHANTOM MODE — Secret Theme
+=========================== */
+.theme-phantom {
+  --bg-color: #000000;
+  --text-color: #00ffff;
+  --accent-color: #ff0033;
+  --glitch-color: #ff0033;
+  --hud-color: #00ffff;
+  --glyph-color: #00ffff;
+  --rain-color: #00ffff;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: 'Share Tech Mono', monospace;
+}
+
+.theme-phantom body,
+.theme-phantom .glitch-target,
+.theme-phantom .reveal,
+.theme-phantom .hud,
+.theme-phantom .merch-item {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.theme-phantom .glitch-target::before {
+  color: var(--glitch-color);
+  text-shadow:
+    0 0 4px var(--glitch-color),
+    0 0 8px var(--accent-color),
+    0 0 12px var(--accent-color);
+}
+
+.theme-phantom .hud,
+.theme-phantom .hud-alert,
+.theme-phantom .hud-theme {
+  color: var(--hud-color);
+  text-shadow: 0 0 2px var(--accent-color);
+  font-weight: bold;
+}
+
+.theme-phantom .matrix-rain span {
+  color: var(--rain-color);
+  text-shadow: 0 0 4px var(--rain-color);
+}
+
+.theme-phantom .button,
+.theme-phantom .merch-item {
+  background-color: transparent;
+  border: 1px solid var(--accent-color);
+  color: var(--text-color);
+  transition: all 0.2s ease;
+}
+
+.theme-phantom .button:hover,
+.theme-phantom .merch-item:hover {
+  background-color: var(--accent-color);
+  color: #000;
+  box-shadow: 0 0 8px var(--accent-color);
+}
+
+.theme-phantom ::selection {
+  background: var(--accent-color);
+  color: #000;
+}
+
+.theme-phantom ::-webkit-scrollbar {
+  width: 8px;
+}
+.theme-phantom ::-webkit-scrollbar-thumb {
+  background: var(--accent-color);
+}
+/* Streaming section layout */
+.stream-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.stream-card {
+  flex: 1 1 360px;
+  max-width: 500px;
+  background: rgba(0,0,0,0.4);
+  border: 1px solid currentColor;
+  padding: 0.75rem;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0,0,0,0.6);
+}
+
+/* SoundCloud credit styling */
+.soundcloud-credit {
+  font-size: 0.7rem;
+  color: currentColor;
+  margin-top: 0.4rem;
+  opacity: 0.7;
+  text-align: center;
+}
+.soundcloud-credit a {
+  color: currentColor;
+  text-decoration: none;
+}
+.soundcloud-credit a:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="Phantom of the Matrix — cinematic, audio-reactive glitch universe by Kyle." />
+  <title>Phantom of the Matrix</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="theme-matrix">
+
+  <!-- Scanline Overlay -->
+  <div id="scanlines" aria-hidden="true"></div>
+
+  <!-- Creator Tools -->
+  <div id="creator-tools">
+    <label>Theme:
+      <select id="theme-toggle" aria-label="Theme selector">
+        <option value="matrix">Matrix Green</option>
+        <option value="glitch">Glitch Red</option>
+        <option value="ghost">Ghost White</option>
+      </select>
+    </label>
+    <label><input type="checkbox" id="debug-toggle"> Debug Mode</label>
+    <label><input type="checkbox" id="perf-toggle"> Performance Mode</label>
+  </div>
+
+  <!-- Boot Screen -->
+  <div id="boot-screen" role="status" aria-live="polite">
+    <div class="boot-text">SYSTEM BOOTING...</div>
+    <div class="boot-progress"><div class="boot-bar"></div></div>
+  </div>
+
+  <!-- Multi-layer Matrix Rain canvases -->
+  <canvas id="matrix-back" aria-hidden="true"></canvas>
+  <canvas id="matrix-mid" aria-hidden="true"></canvas>
+  <canvas id="matrix-front" aria-hidden="true"></canvas>
+
+  <!-- Waveform-driven particles -->
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+  <!-- 3D glyph cloud -->
+  <div id="glyph3d-container" aria-label="3D glyph cloud">
+    <canvas id="glyph3d"></canvas>
+  </div>
+
+  <!-- Mouse Trail -->
+  <div id="trail-container" aria-hidden="true"></div>
+
+  <!-- HUD -->
+  <div id="system-hud" class="glitch-target" role="region" aria-label="System HUD">
+    <div class="hud-title">[ SYSTEM STATUS ]</div>
+    <div class="hud-line">Theme: <span id="hud-theme">Matrix</span></div>
+    <div class="hud-line">Audio Level: <span id="hud-audio">0</span></div>
+    <div class="hud-line">Mode: <span id="hud-mode">Normal</span></div>
+    <canvas id="hud-spectrum" width="180" height="30" aria-hidden="true"></canvas>
+    <div class="hud-alert" id="hud-alert" aria-live="polite"></div>
+    <div class="hud-glyphs" id="hud-glyphs" aria-hidden="true"></div>
+  </div>
+
+  <!-- Hero -->
+<div class="hero glitch-target reveal" data-reveal="Phantom of the Matrix">
+  <h1 class="decrypt" data-text="Phantom of the Matrix">Phantom of the Matrix</h1>
+  <p class="tagline decrypt" data-text="Cinematic soundscapes from the glitch dimension">
+    Cinematic soundscapes from the glitch dimension
+  </p>
+  <div class="buttons" role="group" aria-label="Social links">
+    <a href="https://open.spotify.com/artist/your-id" class="glow-btn" target="_blank" rel="noopener">Spotify</a>
+    <a href="https://music.apple.com/artist/your-id" class="glow-btn" target="_blank" rel="noopener">Apple Music</a>
+    <a href="https://soundcloud.com/your-id" class="glow-btn" target="_blank" rel="noopener">SoundCloud</a>
+    <a href="https://youtube.com/@your-id" class="glow-btn" target="_blank" rel="noopener">YouTube</a>
+    <a href="https://instagram.com/your-id" class="glow-btn" target="_blank" rel="noopener">Instagram</a>
+  </div>
+</div>
+  <!-- Bio -->
+<section class="bio glitch-target reveal" aria-labelledby="bio-heading">
+  <h2 id="bio-heading" class="decrypt" data-text="About the Artist">About the Artist</h2>
+  <p class="decrypt" data-text="Phantom of the Matrix is the sonic alter ego of Kyle, blending cinematic sound design, glitch aesthetics, and immersive storytelling.">
+    Phantom of the Matrix is the sonic alter ego of Kyle,blending cinematic sound design, glitch aesthetics, and immersive storytelling.
+  </p>
+</section>
+ <!-- Merch -->
+<section class="merch glitch-target reveal" aria-labelledby="merch-heading">
+  <h2 id="merch-heading" class="decrypt" data-text="Merch">Merch</h2>
+  <div class="merch-grid">
+    <div class="merch-item">🖤 Shirt</div>
+    <div class="merch-item">💿 Vinyl</div>
+    <div class="merch-item">📼 Cassette</div>
+  </div>
+</section>
+
+  <!-- Booking -->
+<section class="contact glitch-target reveal" aria-labelledby="booking-heading">
+  <h2 id="booking-heading" class="decrypt" data-text="Booking">Booking</h2>
+  <form action="#" method="POST" autocomplete="on">
+    <input
+      type="text"
+      name="name"
+      placeholder="Name"
+      required
+      aria-label="Name"
+    />
+    <input
+      type="email"
+      name="email"
+      placeholder="Email"
+      required
+      aria-label="Email"
+    />
+    <input
+      type="date"
+      name="date"
+      required
+      aria-label="Preferred date"
+    />
+    <textarea
+      name="message"
+      placeholder="Message"
+      required
+      aria-label="Message"
+    ></textarea>
+    <button type="submit" class="glow-btn">Send</button>
+  </form>
+<section class="email glitch-target reveal" aria-labelledby="email-heading">
+  <h2 id="email-heading" class="decrypt" data-text="Join the Simulation">Join the Simulation</h2>
+  <p class="email-subtext">
+    Get exclusive drops, hidden codes, and early access to unreleased tracks.
+  </p>
+
+  <form action="https://gmail.us14.list-manage.com/subscribe/post?u=a4065595894adb068ae99e452&amp;id=d8a4a44c99&amp;f_id=005cb4e5f0"
+        method="post" target="_blank" novalidate>
+    <label for="mce-EMAIL" class="visually-hidden">Email address</label>
+    <input type="email" name="EMAIL" id="mce-EMAIL" placeholder="Enter your email" required>
+    <button type="submit" class="glow-btn">Access Granted</button>
+
+    <!-- Anti-bot hidden field -->
+    <div style="position: absolute; left: -5000px;" aria-hidden="true">
+      <input type="text" name="b_a4065595894adb068ae99e452_d8a4a44c99" tabindex="-1" value="">
+    </div>
+  </form>
+</section>
+<!-- Unified Streaming Section -->
+<section class="streaming glitch-target reveal" aria-labelledby="stream-heading">
+  <h2 id="stream-heading" class="decrypt" data-text="Stream Phantom">Stream Phantom</h2>
+
+  <div class="stream-grid">
+    <!-- Spotify Player -->
+    <div class="stream-card">
+      <iframe
+        style="border-radius:12px"
+        src="https://open.spotify.com/embed/artist/78rcsS3Quqv91s6lye7fGa?utm_source=generator"
+        width="100%"
+        height="152"
+        frameborder="0"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy"
+        title="Phantom of the Matrix — Spotify player">
+      </iframe>
+    </div>
+
+    <!-- SoundCloud Player -->
+    <div class="stream-card">
+      <iframe
+        width="100%"
+        height="300"
+        scrolling="no"
+        frameborder="no"
+        allow="autoplay"
+        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/2079354270&color=%231a1d3d&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true">
+      </iframe>
+      <div class="soundcloud-credit">
+        <a href="https://soundcloud.com/traplord2000" title="phantom of the matrix" target="_blank" rel="noopener">phantom of the matrix</a> ·
+        <a href="https://soundcloud.com/traplord2000/sets/phantom-of-the-matrix" title="phantom of the matrix" target="_blank" rel="noopener">phantom of the matrix</a>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Footer -->
+  <footer class="footer glitch-target reveal">
+    <p>&copy; 2025 Phantom of the Matrix. All rights distorted.</p>
+  </footer>
+
+    <!-- Audio -->
+  <audio id="matrix-audio" src="assets/main-track.mp3" loop preload="auto"></audio>
+  <audio id="secret-audio" preload="auto"></audio>
+  <!-- Scripts -->
+  <script src="script.js" defer></script>
+</body>
+</html>
+
+   <!-- Three.js for 3D glyph cloud -->
+  <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+  <script src="script.js" defer></script>
+</body>
+</html>

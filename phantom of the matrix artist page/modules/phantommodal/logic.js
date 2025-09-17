@@ -1,0 +1,1 @@
+import { openPhantomModal, closePhantomModal } from '../modules/phantomModal/logic.js';
